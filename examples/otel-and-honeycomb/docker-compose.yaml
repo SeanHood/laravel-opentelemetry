@@ -1,0 +1,13 @@
+version: '3.3'
+services:
+  opentelemetry:
+    image: otel/opentelemetry-collector-contrib:latest
+    environment:
+      - HONEYCOMB_WRITEKEY
+      - HONEYCOMB_DATASET=laravel-opentelemetry
+    ports:
+      - "80:80"
+      - "9411:9411"
+    volumes:
+      - "./otel-config.yaml:/etc/otel/config.yaml"
+    restart: always

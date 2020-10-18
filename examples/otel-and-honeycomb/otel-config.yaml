@@ -1,0 +1,24 @@
+
+receivers:
+  # laravel-opentelemetry is configured to use the Zipkin Exporter,
+  # there's currently a native OpenTelemetry Protocol Exporter in the
+  # works.
+  zipkin:
+
+exporters:
+  # Configuration for the Honeycomb Exporter. More info:
+  # https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/master/exporter/honeycombexporter
+  honeycomb:
+    api_key: "$HONEYCOMB_WRITEKEY"
+    dataset: "$HONEYCOMB_DATASET"
+    debug: true
+
+  # Optional. Gives verbose output of our traces as they're going through the Collector
+  logging:
+    loglevel: debug
+
+service:
+  pipelines:
+    traces:
+      receivers: [zipkin]
+      exporters: [honeycomb, logging]

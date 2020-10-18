@@ -1,0 +1,28 @@
+{
+  "name": "seanhood/laravel-opentelemetry",
+  "description": "Laravel middleware to send events to OpenTelemetry",
+  "type": "library",
+  "license": "MIT",
+  "require": {
+    "open-telemetry/opentelemetry": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "SeanHood\\LaravelOpenTelemetry\\": "src"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "SeanHood\\LaravelOpenTelemetry\\LaravelOpenTelemetryServiceProvider"
+      ]
+    }
+  },
+  "scripts": {
+    "format": "phpcbf --standard=psr2 src/"
+  },
+  "require-dev": {
+    "orchestra/testbench": "^4.0",
+    "squizlabs/php_codesniffer": "^3.5"
+  }
+}
