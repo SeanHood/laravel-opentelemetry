@@ -4,10 +4,19 @@ namespace SeanHood\LaravelOpenTelemetry\Middleware;
 
 use Closure;
 
-use OpenTelemetry\Sdk\Trace\TracerProvider;
+use OpenTelemetry\Trace\Tracer;
 
 class OpenTelemetryRequests
 {
+    /**
+     * @var Tracer $tracer OpenTelemetry Tracer
+     */
+    private $tracer;
+
+    public function __construct(Tracer $tracer)
+    {
+        $this->tracer = $tracer;
+    }
 
     /**
      * Handle an incoming request.
@@ -18,13 +27,7 @@ class OpenTelemetryRequests
      */
     public function handle($request, Closure $next)
     {
-
-        // I'd prefer to use Type Hinting for accessing this OpenTelemetry instance
-        // How do I do that?
-        $tracer = app('laravel-opentelemetry');
-
-        $span = $tracer->startAndActivateSpan('http_request');
-        $tracer->setActiveSpan($span);
+        $span = $this->tracer->startAndActivateSpan('http_request');
 
         $span->setAttribute('request.path', $request->path())
              ->setAttribute('request.url', $request->fullUrl())
@@ -35,9 +38,8 @@ class OpenTelemetryRequests
 
         $response = $next($request);
 
-
         $span->setAttribute('response.status', $response->status());
-        $tracer->endActiveSpan();
+        $this->tracer->endActiveSpan();
 
         return $response;
     }
