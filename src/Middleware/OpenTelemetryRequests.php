@@ -24,7 +24,6 @@ class OpenTelemetryRequests
         $tracer = app('laravel-opentelemetry');
 
         $span = $tracer->startAndActivateSpan('http_request');
-        $tracer->setActiveSpan($span);
 
         $span->setAttribute('request.path', $request->path())
              ->setAttribute('request.url', $request->fullUrl())
