@@ -3,8 +3,14 @@
   "description": "Laravel middleware to send events to OpenTelemetry",
   "type": "library",
   "license": "MIT",
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/beniamin/opentelemetry-php"
+    }
+  ],
   "require": {
-    "open-telemetry/opentelemetry": "dev-master"
+    "open-telemetry/opentelemetry": "dev-remove-global-span"
   },
   "autoload": {
     "psr-4": {
