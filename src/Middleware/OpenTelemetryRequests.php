@@ -9,7 +9,7 @@ use OpenTelemetry\Trace\Tracer;
 class OpenTelemetryRequests
 {
     /**
-     * @var Tracer  $tracer  OpenTelemetry Tracer
+     * @var Tracer $tracer OpenTelemetry Tracer
      */
     private $tracer;
 

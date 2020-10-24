@@ -43,7 +43,6 @@ class LaravelOpenTelemetryServiceProvider extends ServiceProvider
         });
     }
 
-
     /**
      * Initialize an OpenTelemetry Tracer with the exporter
      * specified in the application configuration.
