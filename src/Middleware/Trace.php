@@ -40,6 +40,8 @@ class Trace
              ->setAttribute('request.ip', $request->ip())
              ->setAttribute('request.ua', $request->userAgent());
 
+        $this->tagUser($request, $span);
+
         $response = $next($request);
 
         $span->setAttribute('response.status', $response->status());
