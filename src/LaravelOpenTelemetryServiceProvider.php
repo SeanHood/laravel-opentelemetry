@@ -11,10 +11,10 @@ use OpenTelemetry\Sdk\Trace\TracerProvider;
 class LaravelOpenTelemetryServiceProvider extends ServiceProvider
 {
     /**
-    * Publishes configuration file.
-    *
-    * @return  void
-    */
+     * Publishes configuration file.
+     *
+     * @return void
+     */
     public function boot()
     {
         $this->publishes([
@@ -27,10 +27,10 @@ class LaravelOpenTelemetryServiceProvider extends ServiceProvider
         );
     }
     /**
-    * Make config publishment optional by merging the config from the package.
-    *
-    * @return  void
-    */
+     * Make config publishment optional by merging the config from the package.
+     *
+     * @return void
+     */
     public function register()
     {
         // I think I'd prefer to use Type Hinting for accessing this OpenTelemetry instance
@@ -43,7 +43,6 @@ class LaravelOpenTelemetryServiceProvider extends ServiceProvider
 
     private function initOpenTelemetry()
     {
-
         if (config('laravel_opentelemetry.enable')) {
             $zipkinExporter = new ZipkinExporter(
                 config('laravel_opentelemetry.service_name'),
