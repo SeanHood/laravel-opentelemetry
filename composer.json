@@ -4,7 +4,7 @@
   "type": "library",
   "license": "MIT",
   "require": {
-    "open-telemetry/opentelemetry": "dev-master"
+    "open-telemetry/opentelemetry": "dev-use-noop-span"
   },
   "autoload": {
     "psr-4": {
