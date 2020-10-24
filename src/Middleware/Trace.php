@@ -6,7 +6,10 @@ use Closure;
 
 use OpenTelemetry\Trace\Tracer;
 
-class OpenTelemetryRequests
+/**
+ * Trace an incoming HTTP request
+ */
+class Trace
 {
     /**
      * @var Tracer $tracer OpenTelemetry Tracer
@@ -27,7 +30,7 @@ class OpenTelemetryRequests
      */
     public function handle($request, Closure $next)
     {
-        $span = $this->tracer->startAndActivateSpan('http_request');
+        $span = $this->tracer->startAndActivateSpan('http_'.$request->method());
 
         $span->setAttribute('request.path', $request->path())
              ->setAttribute('request.url', $request->fullUrl())
