@@ -28,7 +28,6 @@ class OpenTelemetryRequests
     public function handle($request, Closure $next)
     {
         $span = $this->tracer->startAndActivateSpan('http_request');
-        $this->tracer->setActiveSpan($span);
 
         $span->setAttribute('request.path', $request->path())
              ->setAttribute('request.url', $request->fullUrl())
