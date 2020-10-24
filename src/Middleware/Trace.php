@@ -3,7 +3,8 @@
 namespace SeanHood\LaravelOpenTelemetry\Middleware;
 
 use Closure;
-
+use Illuminate\Http\Request;
+use OpenTelemetry\Trace\Span;
 use OpenTelemetry\Trace\Tracer;
 
 /**
@@ -45,5 +46,12 @@ class Trace
         $this->tracer->endActiveSpan();
 
         return $response;
+    }
+
+    private function tagUser(Request $request, Span $span)
+    {
+        if($request->user()) {
+            $span->setAttribute('request.user', $request->user()->email);
+        }
     }
 }
