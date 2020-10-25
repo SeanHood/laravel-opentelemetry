@@ -27,8 +27,7 @@ composer require seanhood/laravel-opentelemetry
 
 protected $middleware = [
     ...
-
-    \SeanHood\LaravelOpenTelemetry\Middleware\OpenTelemetryRequests::class
+    \SeanHood\LaravelOpenTelemetry\Middleware\Trace::class
 ];
 ```
 
