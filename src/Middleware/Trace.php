@@ -31,7 +31,7 @@ class Trace
      */
     public function handle($request, Closure $next)
     {
-        $span = $this->tracer->startAndActivateSpan('http_'.$request->method());
+        $span = $this->tracer->startAndActivateSpan('http_'.strtolower($request->method()));
 
         $span->setAttribute('request.path', $request->path())
              ->setAttribute('request.url', $request->fullUrl())
