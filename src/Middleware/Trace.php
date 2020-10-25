@@ -66,7 +66,7 @@ class Trace
             $span->setSpanStatus(SpanStatus::INTERNAL, SpanStatus::DESCRIPTION[SpanStatus::INTERNAL]);
         }
 
-        if($httpStatusCode >= 200 && $httpStatusCode <= 300) {
+        if($httpStatusCode >= 200 && $httpStatusCode < 300) {
             $span->setSpanStatus(SpanStatus::OK, SpanStatus::DESCRIPTION[SpanStatus::OK]);
         }
     }
