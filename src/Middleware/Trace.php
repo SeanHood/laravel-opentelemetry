@@ -36,7 +36,6 @@ class Trace
         $response = $next($request);
 
         $this->addConfiguredTags($span, $request, $response);
-
         $span->setAttribute('response.status', $response->status());
         
         $this->tracer->endActiveSpan();
@@ -44,7 +43,7 @@ class Trace
         return $response;
     }
 
-    private function addConfiguredTags(Span $span, Request $request, Response $response)
+    private function addConfiguredTags(Span $span, Request $request, $response)
     {
         $configurationKey = 'laravel_opentelemetry.tags.';
 
