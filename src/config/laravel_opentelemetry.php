@@ -53,7 +53,7 @@ return [
     */
 
     'tags' => [
-        'ip'     => true, // Requestr's IP address
+        'ip'     => true, // Requester's IP address
         'path'   => true, // Path requested
         'url'    => true, // Full URL requested
         'method' => true, // HTTP method of the request
