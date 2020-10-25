@@ -4,6 +4,7 @@ namespace SeanHood\LaravelOpenTelemetry\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use OpenTelemetry\Trace\Span;
 use OpenTelemetry\Trace\Tracer;
 
@@ -32,26 +33,46 @@ class Trace
     public function handle($request, Closure $next)
     {
         $span = $this->tracer->startAndActivateSpan('http_'.strtolower($request->method()));
-
-        $span->setAttribute('request.path', $request->path())
-             ->setAttribute('request.url', $request->fullUrl())
-             ->setAttribute('request.method', $request->method())
-             ->setAttribute('request.secure', $request->secure())
-             ->setAttribute('request.ip', $request->ip())
-             ->setAttribute('request.ua', $request->userAgent());
-
         $response = $next($request);
 
-        $this->tagUser($request, $span); // Has to be after request has been processed otherwise $request->user() is null
+        $this->addConfiguredTags($span, $request, $response);
+
         $span->setAttribute('response.status', $response->status());
+        
         $this->tracer->endActiveSpan();
 
         return $response;
     }
 
-    private function tagUser(Request $request, Span $span)
+    private function addConfiguredTags(Span $span, Request $request, Response $response)
     {
-        if($request->user()) {
+        $configurationKey = 'laravel_opentelemetry.tags.';
+
+        if(config($configurationKey.'path')) {
+            $span->setAttribute('request.path', $request->path());
+        }
+
+        if(config($configurationKey.'url')) {
+            $span->setAttribute('request.url', $request->fullUrl());
+        } 
+        
+        if(config($configurationKey.'method')) {
+            $span->setAttribute('request.method', $request->method());
+        }
+
+        if(config($configurationKey.'secure')) {
+            $span->setAttribute('request.secure', $request->secure());
+        }
+
+        if(config($configurationKey.'ip')) {
+            $span->setAttribute('request.ip', $request->ip());
+        }
+
+        if(config($configurationKey.'ua')) {
+            $span->setAttribute('request.ua', $request->userAgent());
+        }
+
+        if(config($configurationKey.'user') && $request->user()) {
             $span->setAttribute('request.user', $request->user()->email);
         }
     }
